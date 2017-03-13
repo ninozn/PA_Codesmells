@@ -6,7 +6,7 @@ public class ConvertTime implements ConvertTimeImp {
     private String hour, minutes, partOfDay;
 
     // factory method
-    private ConvertTime(int hoursInNumber, int minutesInNumber) {
+    public ConvertTime(int hoursInNumber, int minutesInNumber) {
         this.hoursInNumber = hoursInNumber;
         this.minutesInNumber = minutesInNumber;
     }
@@ -17,6 +17,8 @@ public class ConvertTime implements ConvertTimeImp {
 
     @Override
     public String convertTimeToString() {
+        checkRounding(minutesInNumber);
+
         minutes = minutestToString(minutes); //Extract method
         hour = hoursToString(); //Extract method
         partOfDay = getPartOfDay(partOfDay); //Extract method
@@ -87,21 +89,40 @@ public class ConvertTime implements ConvertTimeImp {
         else if(minutesInNumber>42&&minutesInNumber<49)//bekijk min en uren +1
         {
             minutes= QUARTER_TO;
-            hoursInNumber++;
         }
         else if(minutesInNumber>20&&minutesInNumber<42)//bekijk min en uren +1
         {
             minutes= HALF_PAST;
-            hoursInNumber++;
         }
-        else if(minutesInNumber>=49&&minutesInNumber<60) //bekijk min;heel uur
+        else
         {
-            minutes= O_CLOCK;
+            minutes = O_CLOCK;
         }
-        else if(minutesInNumber>=0&&minutesInNumber<11) // bekijk min; heel uur
-        {
-            minutes= O_CLOCK;
-        }
+
         return minutes;
     }
+
+    private void roundToNextHour() {
+        hoursInNumber++;
+    }
+
+    private void checkRounding(int minutes) {
+        if(minutes >= 23 && minutes < 60) {
+            roundToNextHour();
+        }
+    }
+
+    public boolean runValidations() {
+        return validateHours() && validateMinutes() ? true : false;
+    }
+
+    private boolean validateHours() {
+        return hoursInNumber >= 0 && hoursInNumber <= 23 ? true : false;
+    }
+
+    private boolean validateMinutes() {
+        return minutesInNumber >= 0 && minutesInNumber <= 59 ? true : false;
+    }
+
+
 }

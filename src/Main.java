@@ -9,10 +9,16 @@ public class Main
 	public Main()
 	{
 	}
-		public static void drukTijdAf(int hoursInNumber,int minutesInNumber)
-		{
-            System.out.println(ConvertTime.createConvertTime(hoursInNumber, minutesInNumber).convertTimeToString());
+
+	public static void drukTijdAf(int hoursInNumber,int minutesInNumber)
+	{
+		ConvertTime converter = new ConvertTime(hoursInNumber, minutesInNumber);
+
+		if (converter.runValidations()) {
+			System.out.println(converter.convertTimeToString());
 		}
+
+	}
 
     public static void main(String[]arg)
 		{
@@ -23,10 +29,6 @@ public class Main
 			drukTijdAf(10, 30); //wordt: kwart over twaalf
 			drukTijdAf(9, 47); //wordt: kwart over twaalf
 			drukTijdAf(2, 43); //wordt: kwart over twaalf
-
-
-
-
 		}
 
 
