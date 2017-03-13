@@ -13,4 +13,5 @@ public interface ConvertTimeImp {
     String hoursToString();
 
     String minutestToString(String minutes);
+
 }
